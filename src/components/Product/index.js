@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { link } from 'react-router-dom'
 import './index.css'
 
 export default class Product extends Component {
@@ -13,10 +14,15 @@ export default class Product extends Component {
 		this.setState({reviews: result})
 	}
 	
+	handleClick = () => {
+		const { id } = this.props.product
+		this.props.history.push(`/product/${id}`)
+	}
+
 	render() {
 		const { id, title, img, text } = this.props.product
 		return (
-			<div className='product-desc'>
+			<div className='product-desc' onClick={this.handleClick}>
 				<div><img src={`http://smktesting.herokuapp.com/static/${img}`} alt={`product ${id}`} /></div>
 				<div>id: {id}</div>
 				<div>title: {title}</div>

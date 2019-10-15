@@ -1,6 +1,6 @@
 const LOAD = 'LOAD'
 
-export const loadAction = () => async (dispatch) => {
+export const fetchProductsAction = () => async (dispatch) => {
 	const rawRes = await fetch('http://smktesting.herokuapp.com/api/products/')
 	const products = await rawRes.json()
 	dispatch({
