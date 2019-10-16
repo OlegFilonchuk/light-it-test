@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import './index.css'
+import { connect } from 'react-redux';
 
-export default class Product extends Component {
+class Product extends Component {
 
 	state = {
 		reviews: []
@@ -15,10 +16,11 @@ export default class Product extends Component {
 	}
 
 	render() {
+
 		const { id, title, img, text } = this.props.product
 		return (
 			<Link to={`/product/${id}`}>
-				<div><img src={`http://smktesting.herokuapp.com/static/${img}`} alt={`product ${id}`} /></div>
+				<div><img src={this.props.images[id]} alt={`product ${id}`} /></div>
 				<div>id: {id}</div>
 				<div>title: {title}</div>
 				<div>text: {text}</div>
@@ -26,3 +28,9 @@ export default class Product extends Component {
 		)
 	}
 }
+
+const mapStateToProps = ({imagesState}) => ({
+	images: imagesState
+})
+
+export default connect(mapStateToProps)(Product)

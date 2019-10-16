@@ -9,11 +9,7 @@ class ProductPage extends Component {
   }
 
   componentDidMount() {
-    if (!this.props.products) {
-      this.props.fetchProducts()
-    }
 		this.loadReviews(this.props.match.params.id)
-    
   }
 
   loadReviews = async (id) => {
