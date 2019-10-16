@@ -11,8 +11,8 @@ class ProductList extends Component {
   }
 
   getProductsList = () => {
-    return this.props.productsState.map((product, i) => (
-      <li key={i}>
+    return this.props.productsState.map((product) => (
+      <li key={product.id}>
         <Product product={product} {...this.props} />
       </li>
     ))
