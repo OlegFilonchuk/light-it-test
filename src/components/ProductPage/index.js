@@ -16,7 +16,7 @@ class ProductPage extends Component {
   loadReviews = async (id) => {
     const rawRes = await fetch(`http://smktesting.herokuapp.com/api/reviews/${id}`)
     const result = await rawRes.json()
-    this.setState({ reviews: result })
+    this.setState({ reviews: result }) 
   }
 
   render() {

@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { Router, Route, Switch } from 'react-router-dom'
+import { Router, Route, Switch, browserHistory } from 'react-router-dom'
 import ProductList from './components/ProductList';
 import ProductPage from './components/ProductPage/index';
-import { createBrowserHistory } from 'history' 
-import './App.css';
-
-const history = createBrowserHistory()
+import AuthPage from './components/AuthPage/index';
+import { history } from './utils/history' 
+import './App.css'
 
 class App extends Component {
 
@@ -15,6 +14,7 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={ProductList}/>
           <Route exact path="/product/:id" component={ProductPage}/>
+          <Route exact path="/login" component={AuthPage}/>
         </Switch>
       </Router>
     );
