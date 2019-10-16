@@ -20,7 +20,7 @@ class Product extends Component {
 		const { id, title, img, text } = this.props.product
 		return (
 			<Link to={`/product/${id}`}>
-				<div><img src={this.props.images[id]} alt={`product ${id}`} /></div>
+				<div><img src={`http://smktesting.herokuapp.com/static/${img}`} alt={`product ${id}`}/></div>
 				<div>id: {id}</div>
 				<div>title: {title}</div>
 				<div>text: {text}</div>

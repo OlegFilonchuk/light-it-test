@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { fetchProductsAction } from './../../redux/reducers/productsReducer';
+import ReviewForm from './../ReviewForm';
 
 class ProductPage extends Component {
 
@@ -27,12 +28,14 @@ class ProductPage extends Component {
         <div>id: {id}</div>
         <div>title: {title}</div>
         <div>text: {text}</div>
+        <ReviewForm />
         <ul>
           {this.state.reviews.map((item) => (
             <li key={item.id}>
               <div>{item.rate}</div>
               <div>{item.text}</div>
               <div>{item.created_by.username}</div>
+              <div>{item.created_at}</div>
             </li>
           ))}
         </ul>
