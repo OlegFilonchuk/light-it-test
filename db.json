@@ -1,11 +1,22 @@
 {
-	"posts": [
+	"products": [
 		{
 			"id": 1,
-			"title": "hello"
+			"title": "product1",
+			"text": "text for product1",
+			"img": "img1.png"
+		},
+		{
+			"id": 2,
+			"title": "product2",
+			"text": "text for product2",
+			"img": "img2.png"
+		},
+		{
+			"id": 3,
+			"title": "product3",
+			"text": "text for product3",
+			"img": "img3.png"
 		}
-	],
-	"profile": {
-		"name": "oleh"
-	}
+	]
 }
