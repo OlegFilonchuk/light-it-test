@@ -25,6 +25,7 @@ const ReviewForm = (props) => {
 			}
 		})
 		const response = await rawRes.json()
+		console.log(response)
 	}
 
 	return (
