@@ -2,15 +2,16 @@ import React, { useState } from 'react'
 
 const ReviewForm = (props) => {
 
-	const [value, setValue] = useState('')
-
-	const data = {
-		rate: 5,
-		text: "777"
-	}
+	const [reviewForm, setReviewForm] = useState({
+		rate: '',
+		text: ''
+	})
 
 	const handleInputChange = (ev) => {
-		setValue(ev.target.value)
+		setReviewForm({
+			...reviewForm,
+			[ev.target.name]: ev.target.value
+		})
 	}
 
 	const onSubmit = async (event) => {
@@ -18,10 +19,10 @@ const ReviewForm = (props) => {
 		const {id} = props;
 		const rawRes = await fetch(`http://smktesting.herokuapp.com/api/reviews/${id}`, {
 			method: 'POST',
-			body: JSON.stringify(data),
+			body: JSON.stringify(reviewForm),
 			headers: {
 				'Content-Type': 'application/json',
-				'Authorization': 'db8421a04d3c19168acc6f086bbe3aab972a8175'
+				'Authorization': localStorage.getItem('a_token')
 			}
 		})
 		const response = await rawRes.json()
@@ -30,7 +31,14 @@ const ReviewForm = (props) => {
 
 	return (
 		<form onSubmit={onSubmit}>
-			<input type="text" value={value} onChange={handleInputChange}/>
+			<label>
+				rate
+				<input type="text" name="rate" value={reviewForm.rate} onChange={handleInputChange}/>
+			</label>
+			<label>
+				enter text
+				<input type="text" name="text" value={reviewForm.text} onChange={handleInputChange}/>
+			</label>
 			<input type="submit"/>
 		</form>
 	)

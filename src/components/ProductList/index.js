@@ -6,8 +6,8 @@ import './index.css';
 
 class ProductList extends Component {
 
-  async componentDidMount() {
-    await this.props.fetchProducts()
+  componentDidMount() {
+    this.props.fetchProducts()
   }
 
   getProductsList = () => {

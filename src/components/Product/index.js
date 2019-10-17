@@ -16,6 +16,8 @@ class Product extends Component {
 	}
 
 	handleClick = () => {
+		if (this.state.reviews.length) return
+		
 		const { id } = this.props.product
 		this.loadReviews(id)
 	}
