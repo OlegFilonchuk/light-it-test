@@ -25,7 +25,6 @@ const LoginForm = (props) =>  {
     props.registerUser(userForm);
   }
 
-  console.log(userForm)
   return (
     <div>
       <label htmlFor="usename">Username</label>

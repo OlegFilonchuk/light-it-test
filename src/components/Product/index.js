@@ -15,11 +15,16 @@ class Product extends Component {
 		this.setState({reviews: result})
 	}
 
+	handleClick = () => {
+		const { id } = this.props.product
+		this.loadReviews(id)
+	}
+
 	render() {
 
 		const { id, title, img, text } = this.props.product
 		return (
-			<div className='product-desc' onClick={() => {this.loadReviews(id);console.log('click')}}>
+			<div className='product-desc' onClick={this.handleClick}>
 					<div><img src={`http://smktesting.herokuapp.com/static/${img}`} alt={`product ${id}`}/></div>
 					<div>id: {id}</div>
 					<div>title: {title}</div>

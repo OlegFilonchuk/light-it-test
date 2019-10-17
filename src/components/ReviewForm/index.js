@@ -6,7 +6,11 @@ const ReviewForm = (props) => {
 
 	const data = {
 		rate: 5,
-		text: 777
+		text: "777"
+	}
+
+	const handleInputChange = (ev) => {
+		setValue(ev.target.value)
 	}
 
 	const onSubmit = async (event) => {
@@ -17,14 +21,15 @@ const ReviewForm = (props) => {
 			body: JSON.stringify(data),
 			headers: {
 				'Content-Type': 'application/json',
-				'Authorization': '26e9b0069ee8f078acc80df00ef8d815cc9809dc'
+				'Authorization': 'db8421a04d3c19168acc6f086bbe3aab972a8175'
 			}
 		})
+		const response = await rawRes.json()
 	}
 
 	return (
 		<form onSubmit={onSubmit}>
-			<input type="text" value={value} onChange={(ev) => setValue(ev.target.value)}/>
+			<input type="text" value={value} onChange={handleInputChange}/>
 			<input type="submit"/>
 		</form>
 	)
