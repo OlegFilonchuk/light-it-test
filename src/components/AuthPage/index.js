@@ -6,7 +6,13 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
   grid: {
-    height: 400
+    height: '100vh',
+    '&& > *': {
+      marginBottom: 10
+    }
+  }, 
+  button: {
+    minWidth: 180
   }
 })
 
@@ -36,13 +42,13 @@ const LoginForm = (props) =>  {
   const classes = useStyles()
 
   return (
-    <Box className={classes.grid}>
-      <Grid container direction="column" justify="space-between" alignItems="center" height="100%">
-        <TextField id="username" value={userForm.username} onChange={handleChange} label="Username" margin="normal"/>
-        <TextField id="password" value={userForm.password} onChange={handleChange} label="Password" margin="normal"/>
+    <Box>
+      <Grid container direction="column" justify="center" alignItems="center" className={classes.grid}>
+        <TextField id="username" value={userForm.username} onChange={handleChange} label="Username" />
+        <TextField id="password" value={userForm.password} onChange={handleChange} label="Password" type="password" />
 
-        <Button variant="contained" color="primary" onClick={submitLoginForm}>Submit login</Button>
-        <Button variant="contained" color="secondary" onClick={submitRegisterForm}>Submit register</Button>
+        <Button variant="contained" color="primary" onClick={submitLoginForm}  className={classes.button}>Submit login</Button>
+        <Button variant="contained" color="secondary" onClick={submitRegisterForm}  className={classes.button} >Submit register</Button>
       </Grid>
     </Box>
   )

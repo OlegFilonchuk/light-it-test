@@ -22,7 +22,7 @@ const ReviewForm = (props) => {
 			body: JSON.stringify(reviewForm),
 			headers: {
 				'Content-Type': 'application/json',
-				'Authorization': localStorage.getItem('a_token')
+				'Authorization': `Token ${localStorage.getItem('a_token')}`
 			}
 		})
 		const response = await rawRes.json()
