@@ -1,8 +1,14 @@
 import React, { useState } from 'react'
-import {connect} from 'react-redux'
-import {loginUserAction, registerUserAction} from '../../redux/reducers/userReducer'
+import { connect } from 'react-redux'
+import { loginUserAction, registerUserAction } from '../../redux/reducers/userReducer'
 import { TextField, Button, Grid, Box } from '@material-ui/core'
-import { height } from '@material-ui/system'
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles({
+  grid: {
+    height: 400
+  }
+})
 
 const LoginForm = (props) =>  {
   const [userForm, setUserForm] = useState({
@@ -27,8 +33,10 @@ const LoginForm = (props) =>  {
     props.registerUser(userForm);
   }
 
+  const classes = useStyles()
+
   return (
-    <Box height="100%">
+    <Box className={classes.grid}>
       <Grid container direction="column" justify="space-between" alignItems="center" height="100%">
         <TextField id="username" value={userForm.username} onChange={handleChange} label="Username" margin="normal"/>
         <TextField id="password" value={userForm.password} onChange={handleChange} label="Password" margin="normal"/>
