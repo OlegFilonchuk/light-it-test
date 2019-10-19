@@ -2,7 +2,7 @@ import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 import { TextField, Button, Grid, Box } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import {postReviewAction} from "../../redux/reducers/reviewReducer"
+import { postReviewAction } from "../../redux/reducers/reviewsReducer"
 import {connect} from "react-redux"
 import { reviewFormValidator } from "../../utils/schemas/yupReviewFormValidator";
 
@@ -26,7 +26,7 @@ const ReviewForm = (props) => {
 		ev.preventDefault()
 		try {
 			await reviewFormValidator.validate(props.fields.values)
-	  	props.postReview({id: props.productId, data: props.fields.values})
+	  	props.postReview({productId: props.productId, data: props.fields.values})
 		} catch (e) {
 			//toast
 			console.log(e)
@@ -37,7 +37,7 @@ const ReviewForm = (props) => {
 		<form onSubmit={submitReviewForm}>
 			<Field name="rate" component={renderTextField}/>
 			<Field name="text" component={renderTextField}/>
-			<Button variant="contained" type="submit" color="primary" >Send review</Button>
+			<Button variant="contained" type="submit" color="primary">Send review</Button>
 		</form>
 	)
 }

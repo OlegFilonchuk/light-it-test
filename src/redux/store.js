@@ -1,16 +1,15 @@
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
-import thunk from 'redux-thunk'
 import createSagaMiddleware from 'redux-saga';
 import { productsReducer } from './reducers/productsReducer'
 import { userReducer } from './reducers/userReducer'
 import { reducer as formReducer } from 'redux-form'
-import { reviewReducer } from "./reducers/reviewReducer"
+import { reviewsReducer } from "./reducers/reviewsReducer"
 import rootSaga from '../sagas/rootSaga'
 
 const rootReducer = combineReducers({
 	productsState: productsReducer,
 	userState: userReducer,
-	reviewState: reviewReducer,
+	reviewsState: reviewsReducer,
 	form: formReducer
 })
 

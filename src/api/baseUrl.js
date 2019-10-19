@@ -1,1 +1,1 @@
-export const baseUrl = 'http://smktesting.herokuapp.com/api/login/'
+export const baseUrl = 'http://smktesting.herokuapp.com/api'

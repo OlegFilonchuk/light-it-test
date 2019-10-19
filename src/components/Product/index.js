@@ -2,29 +2,22 @@ import React, { Component } from 'react'
 import './index.css'
 import { connect } from 'react-redux';
 import ReviewForm from './../ReviewForm/';
+import {fetchReviewsAction} from "../../redux/reducers/reviewsReducer"
+import {productSelectAction} from "../../redux/reducers/productsReducer"
 
 class Product extends Component {
 
-	state = {
-		reviews: []
-	}
-
-	loadReviews = async (id) => {
-		const rawRes = await fetch(`http://smktesting.herokuapp.com/api/reviews/${id}`)
-		const result = await rawRes.json()
-		this.setState({reviews: result})
-	}
-
 	handleClick = () => {
-		if (this.state.reviews.length) return
-
-		const { id } = this.props.product
-		this.loadReviews(id)
+		this.props.selectProduct(this.props.product.id)
+		this.props.fetchReviews(this.props.product.id)
 	}
 
 	render() {
 
 		const { id, title, img, text } = this.props.product
+		const { reviews } = this.props.reviewsState
+		const { selectedProductId } = this.props.productsState
+
 		return (
 			<div className='product-desc' onClick={this.handleClick}>
 					<div><img src={`http://smktesting.herokuapp.com/static/${img}`} alt={`product ${id}`}/></div>
@@ -33,7 +26,7 @@ class Product extends Component {
 					<div>text: {text}</div>
 					<ReviewForm productId={id}/>
 					<ul>
-          {this.state.reviews.map((item) => (
+          {id === selectedProductId && reviews.map((item) => (
             <li key={item.id}>
               <div>{item.rate}</div>
               <div>{item.text}</div>
@@ -47,8 +40,14 @@ class Product extends Component {
 	}
 }
 
-const mapStateToProps = ({imagesState}) => ({
-	images: imagesState
+const mapStateToProps = ({reviewsState, productsState}) => ({
+	reviewsState,
+	productsState
 })
 
-export default connect(mapStateToProps)(Product)
+const mapDispatchToProps = {
+	fetchReviews: fetchReviewsAction,
+	selectProduct: productSelectAction
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Product)
