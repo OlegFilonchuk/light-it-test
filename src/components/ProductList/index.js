@@ -11,7 +11,7 @@ class ProductList extends Component {
   }
 
   getProductsList = () => {
-    return this.props.products.map((product) => ( 
+    return this.props.products.map((product) => (
       <li key={product.id}>
         <Product product={product} {...this.props} />
       </li>
@@ -29,9 +29,10 @@ class ProductList extends Component {
   }
 }
 
-const mapStateToProps = ({ productsState }) => ({
-    products: productsState
-})
+const mapStateToProps = ({ productsState }) => {
+  const {products} = productsState
+  return {products}
+}
 
 const mapDispatchToProps = {
   fetchProducts: fetchProductsAction,

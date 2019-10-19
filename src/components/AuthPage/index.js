@@ -4,8 +4,8 @@ import { TextField, Button, Grid, Box } from '@material-ui/core'
 import { connect } from 'react-redux'
 import { loginUserAction, registerUserAction } from '../../redux/reducers/userReducer'
 import { makeStyles } from '@material-ui/core/styles'
-import {asyncValidate} from "../../utils/reduxAsyncValidate";
-import {authFormValidator} from "../../utils/schemas/yupAuthFormValidator";
+import { asyncValidate } from "../../utils/reduxAsyncValidate";
+import { authFormValidator } from "../../utils/schemas/yupAuthFormValidator";
 
 const renderTextField = ({
                            label,

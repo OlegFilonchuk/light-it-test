@@ -1,9 +1,11 @@
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
+import createSagaMiddleware from 'redux-saga';
 import { productsReducer } from './reducers/productsReducer'
 import { userReducer } from './reducers/userReducer'
 import { reducer as formReducer } from 'redux-form'
-import {reviewReducer} from "./reducers/reviewReducer"
+import { reviewReducer } from "./reducers/reviewReducer"
+import rootSaga from '../sagas/rootSaga'
 
 const rootReducer = combineReducers({
 	productsState: productsReducer,
@@ -17,10 +19,21 @@ const composeEnhancers = typeof window === 'object' && window.__REDUX_DEVTOOLS_E
 	: compose
 
 const enhancer = composeEnhancers(
-	applyMiddleware(thunk)
+	applyMiddleware(createSagaMiddleware)
 )
 
-export default createStore(
+const sagaMiddleware = createSagaMiddleware();
+
+const middlewares = [
+	sagaMiddleware,
+];
+
+const store = createStore(
 	rootReducer,
-	enhancer
+	//enhancer
+	compose(applyMiddleware(...middlewares))
 )
+
+sagaMiddleware.run(rootSaga, store.dispatch);
+
+export default store;
