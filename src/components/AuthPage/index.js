@@ -1,8 +1,25 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { Field, reduxForm } from 'redux-form'
+import { TextField, Button, Grid, Box } from '@material-ui/core'
 import { connect } from 'react-redux'
 import { loginUserAction, registerUserAction } from '../../redux/reducers/userReducer'
-import { TextField, Button, Grid, Box } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles'
+import {asyncValidate} from "../../utils/reduxAsyncValidate";
+import {authFormValidator} from "../../utils/schemas/yupAuthFormValidator";
+
+const renderTextField = ({
+                           label,
+                           input,
+                           meta: { touched, invalid, error },
+                         }) => (
+  <TextField
+    label={label}
+    placeholder={label}
+    error={touched && invalid}
+    helperText={touched && error}
+    {...input}
+  />
+)
 
 const useStyles = makeStyles({
   grid: {
@@ -10,53 +27,51 @@ const useStyles = makeStyles({
     '&& > *': {
       marginBottom: 10
     }
-  }, 
+  },
   button: {
     minWidth: 180
   }
 })
 
-const LoginForm = (props) =>  {
-  const [userForm, setUserForm] = useState({
-    username: '',
-    password: ''
-  })
-
-  const handleChange = (ev) => {
-    setUserForm({
-      ...userForm,
-      [ev.target.id]: ev.target.value
-    })
-  }
+const AuthPageForm = (props) => {
 
   const submitLoginForm = async (ev) => {
     ev.preventDefault()
-    props.loginUser(userForm);
+    try {
+      await authFormValidator.validate(props.fields.values);
+      props.loginUser(props.fields.values);
+    } catch (e) {
+      //toast
+    }
   }
-  
+
   const submitRegisterForm = async (ev) => {
     ev.preventDefault()
-    props.registerUser(userForm);
+    try {
+      await authFormValidator.validate(props.fields.values);
+      props.registerUser(props.fields.values);
+    } catch (e) {
+      //toast
+    }
   }
 
   const classes = useStyles()
-
   return (
     <Box>
       <Grid container direction="column" justify="center" alignItems="center" className={classes.grid}>
-        <TextField id="username" value={userForm.username} onChange={handleChange} label="Username" />
-        <TextField id="password" value={userForm.password} onChange={handleChange} label="Password" type="password" />
-
-        <Button variant="contained" color="primary" onClick={submitLoginForm}  className={classes.button}>Submit login</Button>
-        <Button variant="contained" color="secondary" onClick={submitRegisterForm}  className={classes.button} >Submit register</Button>
+        <Field name="username" label="Username" component={renderTextField}/>
+        <Field name="password" label="Password" type="password" component={renderTextField}/>
+        <Button variant="contained" color="primary" className={classes.button} onClick={submitLoginForm}>Submit login</Button>
+        <Button variant="contained" color="secondary" className={classes.button}  onClick={submitRegisterForm}>Submit register</Button>
       </Grid>
     </Box>
   )
 }
 
-const mapStateToProps = ({userState}) => {
+const mapStateToProps = ({userState, form}) => {
   const {error, token} = userState
-  return {error, token}
+  const fields = form.authForm;
+  return {error, token, fields}
 }
 
 const mapDispatchToProps = {
@@ -64,4 +79,7 @@ const mapDispatchToProps = {
   registerUser: registerUserAction
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm)
+export default reduxForm({
+  form: 'authForm',
+  asyncValidate: asyncValidate(authFormValidator)
+})(connect(mapStateToProps, mapDispatchToProps)(AuthPageForm))

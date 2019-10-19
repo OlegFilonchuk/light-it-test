@@ -1,47 +1,57 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { Field, reduxForm } from 'redux-form'
+import { TextField, Button, Grid, Box } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
+import {postReviewAction} from "../../redux/reducers/reviewReducer"
+import {connect} from "react-redux"
+import { reviewFormValidator } from "../../utils/schemas/yupReviewFormValidator";
+
+const renderTextField = ({
+													 label,
+													 input,
+													 meta: { touched, invalid, error },
+												 }) => (
+	<TextField
+		label={label}
+		placeholder={label}
+		error={touched && invalid}
+		helperText={touched && error}
+		{...input}
+	/>
+)
 
 const ReviewForm = (props) => {
 
-	const [reviewForm, setReviewForm] = useState({
-		rate: '',
-		text: ''
-	})
-
-	const handleInputChange = (ev) => {
-		setReviewForm({
-			...reviewForm,
-			[ev.target.name]: ev.target.value
-		})
-	}
-
-	const onSubmit = async (event) => {
-		event.preventDefault();
-		const {id} = props;
-		const rawRes = await fetch(`http://smktesting.herokuapp.com/api/reviews/${id}`, {
-			method: 'POST',
-			body: JSON.stringify(reviewForm),
-			headers: {
-				'Content-Type': 'application/json',
-				'Authorization': `Token ${localStorage.getItem('a_token')}`
-			}
-		})
-		const response = await rawRes.json()
-		console.log(response)
+	const submitReviewForm = async (ev) => {
+		ev.preventDefault()
+		try {
+			await reviewFormValidator.validate(props.fields.values)
+	  	props.postReview({id: props.productId, data: props.fields.values})
+		} catch (e) {
+			//toast
+			console.log(e)
+		}
 	}
 
 	return (
-		<form onSubmit={onSubmit}>
-			<label>
-				rate
-				<input type="text" name="rate" value={reviewForm.rate} onChange={handleInputChange}/>
-			</label>
-			<label>
-				enter text
-				<input type="text" name="text" value={reviewForm.text} onChange={handleInputChange}/>
-			</label>
-			<input type="submit"/>
+		<form onSubmit={submitReviewForm}>
+			<Field name="rate" component={renderTextField}/>
+			<Field name="text" component={renderTextField}/>
+			<Button variant="contained" type="submit" color="primary" >Send review</Button>
 		</form>
 	)
 }
 
-export default ReviewForm
+const mapStateToProps = ({reviewsState, form}) => ({
+	reviews: reviewsState,
+	fields: form.reviewForm
+})
+
+const mapDispatchToProps = {
+	postReview: postReviewAction
+}
+
+export default reduxForm({
+	form: 'reviewForm',
+
+})(connect(mapStateToProps, mapDispatchToProps)(ReviewForm))

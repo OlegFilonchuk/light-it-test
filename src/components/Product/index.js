@@ -17,7 +17,7 @@ class Product extends Component {
 
 	handleClick = () => {
 		if (this.state.reviews.length) return
-		
+
 		const { id } = this.props.product
 		this.loadReviews(id)
 	}
@@ -31,7 +31,7 @@ class Product extends Component {
 					<div>id: {id}</div>
 					<div>title: {title}</div>
 					<div>text: {text}</div>
-					<ReviewForm id={id}/>
+					<ReviewForm productId={id}/>
 					<ul>
           {this.state.reviews.map((item) => (
             <li key={item.id}>
