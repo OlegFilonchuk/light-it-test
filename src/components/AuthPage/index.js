@@ -4,8 +4,10 @@ import { TextField, Button, Grid, Box } from '@material-ui/core'
 import { connect } from 'react-redux'
 import { loginUserAction, registerUserAction } from '../../redux/reducers/userReducer'
 import { makeStyles } from '@material-ui/core/styles'
-import { asyncValidate } from "../../utils/reduxAsyncValidate";
-import { authFormValidator } from "../../utils/schemas/yupAuthFormValidator";
+import { asyncValidate } from '../../utils/reduxAsyncValidate'
+import { authFormValidator } from '../../utils/schemas/yupAuthFormValidator'
+import { toast } from 'react-toastify'
+
 
 const renderTextField = ({
                            label,
@@ -43,7 +45,7 @@ const AuthPageForm = (props) => {
       await authFormValidator.validate(props.fields.values);
       props.loginUser(props.fields.values);
     } catch (e) {
-      //toast
+      toast.error(e.message)
     }
   }
 
@@ -53,7 +55,7 @@ const AuthPageForm = (props) => {
       await authFormValidator.validate(props.fields.values);
       props.registerUser(props.fields.values);
     } catch (e) {
-      //toast
+      toast.error(e.message)
     }
   }
 

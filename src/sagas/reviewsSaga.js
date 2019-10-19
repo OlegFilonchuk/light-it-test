@@ -1,6 +1,7 @@
 import { put } from 'redux-saga/effects'
 import { POST_REVIEW_REQUEST, POST_REVIEW_RESPONSE, REVIEWS_REQUEST, REVIEWS_RESPONSE, REVIEWS_ERROR, POST_REVIEW_ERROR } from "../redux/reducers/reviewsReducer"
 import {fetchReviews, postReview} from "../api/restApiController"
+import {toast} from "react-toastify"
 
 export function* fetchReviewsSaga({payload}) {
   yield put({ type: REVIEWS_REQUEST })
@@ -23,8 +24,8 @@ export function* fetchReviewsSaga({payload}) {
 export function* postReviewSaga(review) {
   yield put({ type: POST_REVIEW_REQUEST })
   try {
-    console.log(review)
     const {data} = yield postReview(review.payload.productId, review.payload.data)
+    toast.success(`${localStorage.getItem('user')}, your review was posted!`)
 
     yield put({
       type: POST_REVIEW_RESPONSE,
