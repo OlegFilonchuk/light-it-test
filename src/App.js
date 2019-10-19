@@ -14,8 +14,8 @@ class App extends Component {
       <Router history={history}>
         <>
           <Switch>
-            <Route exact path="/login" component={AuthPage}/>
             <Route exact path="/" component={ProductList}/>
+            <Route exact path="/login" component={AuthPage}/>
           </Switch>
           <ToastContainer position="top-center"
                           autoClose={3000}
@@ -32,3 +32,4 @@ class App extends Component {
 }
 
 export default App;
+//TODO: объединить функции юзерсаги, убрать юзера и токен из редакса и переместить из из локалсторедж в сешнсторедж, лодеры прикрутить, ограничить возможность комментирования, внешний вид
