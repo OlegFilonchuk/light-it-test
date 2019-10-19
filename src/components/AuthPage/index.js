@@ -9,6 +9,7 @@ import { authFormValidator } from "../../utils/schemas/yupAuthFormValidator";
 
 const renderTextField = ({
                            label,
+                           type,
                            input,
                            meta: { touched, invalid, error },
                          }) => (
@@ -17,6 +18,7 @@ const renderTextField = ({
     placeholder={label}
     error={touched && invalid}
     helperText={touched && error}
+    type={type}
     {...input}
   />
 )

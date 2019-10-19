@@ -1,84 +1,53 @@
 import { history } from '../../utils/history'
 
-const USER_SUCCESS = 'USER_SUCCESS';
-const USER_ERROR = 'USER_ERROR'; 
+export const USER_RESPONSE = 'USER_RESPONSE';
+export const USER_LOGIN = 'USER_LOGIN'
+export const USER_REGISTER = 'USER_REGISTER'
+export const USER_ERROR = 'USER_ERROR'
+export const USER_REQUEST = 'USER_REQUEST'
 
-export const loginUserAction = (userForm) => async (dispatch) => {
-  const rawRes = await fetch('http://smktesting.herokuapp.com/api/login/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(userForm)
-    })
-    const {success, token, message} = await rawRes.json()
-    if (success) {
-      localStorage.setItem("a_token", token);
-      localStorage.setItem("usename", userForm.username)
-      console.log('logined')
-      history.push('/');
-      dispatch({
-        type: USER_SUCCESS,
-        payload: token
-      })
-    } else {
-      console.log('error')
-      dispatch({
-        type: USER_ERROR,
-        payload: message
-      })
-    }
-}
+export const loginUserAction = (form) => ({
+  type: USER_LOGIN,
+  payload: form
+})
 
-export const registerUserAction = (userForm) => async (dispatch) => {
-  const rawRes = await fetch('http://smktesting.herokuapp.com/api/register/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(userForm)
-    })
-    const {success, token, message} = await rawRes.json()
-    if (success) {
-      localStorage.setItem("a_token", token);
-      localStorage.setItem("usename", userForm.username)
-      history.push('/');
-      console.log('registered')
-      dispatch({
-        type: USER_SUCCESS,
-        payload: token
-      })
-    } else {
-      console.log('error')
-      dispatch({
-        type: USER_ERROR,
-        payload: message
-      })
-    }
-}
+export const registerUserAction = (form) => ({
+  type: USER_REGISTER,
+  payload: form
+})
 
 const initialState = {
-  token: null,
-  error: null
+  username: '',
+  token: '',
+  error: null,
+  isFetching: false
 }
 
 export const userReducer = (state=initialState, action) => {
-	const { type, payload } = action
+  const { type, payload } = action
 
-	switch (type) {
-		case USER_SUCCESS:
-			return{
+  switch (type) {
+    case USER_REQUEST:
+      return {
         ...state,
-        token: payload,
+        isFetching: true
+      }
+    case USER_RESPONSE:
+      return {
+        ...state,
+        token: payload.token,
+        username: payload.username,
+        isFetching: false,
         error: null
       }
     case USER_ERROR: {
       return {
         ...state,
-        error: payload
+        isFetching: false,
+        error: payload.error
       }
     }
-		default:
-			return state
-	}
+    default:
+      return state
+  }
 }
