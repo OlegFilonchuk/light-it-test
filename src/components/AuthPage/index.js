@@ -28,7 +28,7 @@ const renderTextField = ({
 const useStyles = makeStyles({
   grid: {
     height: '100vh',
-    '&& > *': {
+    '& > *': {
       marginBottom: 10
     }
   },

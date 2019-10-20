@@ -3,8 +3,9 @@ import './index.css'
 import { connect } from 'react-redux';
 import ReviewForm from './../ReviewForm/';
 import {fetchReviewsAction} from "../../redux/reducers/reviewsReducer"
-import { Paper, Grid, Typography, withStyles, List, ListItem } from '@material-ui/core'
+import { Paper, Grid, Typography, withStyles, List, ListItem, Box } from '@material-ui/core'
 import LoginSuggest from "../LoginSuggest"
+import Review from "../Review"
 
 const styles = {
 	root: {
@@ -12,10 +13,11 @@ const styles = {
 		padding: 20
 	},
 	title: {
-		marginTop: 30
+		marginTop: 30,
 	},
 	text: {
-		marginTop: 30
+		marginTop: 30,
+		marginBottom: 50
 	}
 }
 
@@ -45,18 +47,21 @@ class Product extends Component {
 							{text}
 						</Typography >
 
-						{isLoggedIn ? <ReviewForm productId={id}/> : <LoginSuggest />}
+						<Box>
+							<Typography variant="h5">
+								Reviews:
+							</Typography>
 
-						<List>
-							{id === selectedProductId && reviews.map((item) => (
-								<ListItem key={item.id}>
-									<div>{item.rate}</div>
-									<div>{item.text}</div>
-									<div>{item.created_by.username}</div>
-									<div>{item.created_at}</div>
-								</ListItem>
-							))}
-						</List>
+							{isLoggedIn ? <ReviewForm productId={id}/> : <LoginSuggest />}
+
+							<List>
+								{id === selectedProductId && reviews.map((item) => (
+									<ListItem key={item.id}>
+										<Review review={item}/>
+									</ListItem>
+								))}
+							</List>
+						</Box>
 					</Grid>
 				</Grid>
 			</Paper>

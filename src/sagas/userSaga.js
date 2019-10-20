@@ -56,7 +56,7 @@ export function* userRegisterSaga(form) {
         type: USER_RESPONSE,
         payload: {
           token,
-          user: form.payload.username
+          username: form.payload.username
         }
       });
     } else {
