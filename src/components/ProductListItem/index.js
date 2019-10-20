@@ -27,7 +27,7 @@ class ProductListItem extends Component {
 
 const mapStateToProps = ({productsState, reviewsState}) => ({
   productsState,
-  reviewsState
+  // reviewsState
 })
 
 const mapDispatchToProps = {
