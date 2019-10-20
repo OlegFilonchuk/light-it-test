@@ -3,12 +3,19 @@ import './index.css'
 import { connect } from 'react-redux';
 import ReviewForm from './../ReviewForm/';
 import {fetchReviewsAction} from "../../redux/reducers/reviewsReducer"
-import { Paper, Grid, Typography, withStyles } from '@material-ui/core'
+import { Paper, Grid, Typography, withStyles, List, ListItem } from '@material-ui/core'
+import LoginSuggest from "../LoginSuggest"
 
 const styles = {
 	root: {
 		backgroundColor: '#ddd',
 		padding: 20
+	},
+	title: {
+		marginTop: 30
+	},
+	text: {
+		marginTop: 30
 	}
 }
 
@@ -22,6 +29,7 @@ class Product extends Component {
 		const { reviews } = this.props.reviewsState
 		const { selectedProductId } = this.props.productsState
 		const { classes } = this.props
+		const loggedIn = localStorage.getItem('a_token') && localStorage.getItem('user')
 
 		return (
 			<Paper>
@@ -30,25 +38,25 @@ class Product extends Component {
 						<img src={`http://smktesting.herokuapp.com/static/${img}`} alt={`product ${id}`}/>
 					</Grid>
 					<Grid>
-						<Typography variant="h3">
+						<Typography variant="h3" className={classes.title}>
 							{title}
 						</Typography >
-						<Typography variant="body1">
+						<Typography variant="body1" className={classes.text}>
 							{text}
 						</Typography >
 
-						<ReviewForm productId={id}/>
+						{loggedIn ? <ReviewForm productId={id}/> : <LoginSuggest />}
 
-						<ul>
+						<List>
 							{id === selectedProductId && reviews.map((item) => (
-								<li key={item.id}>
+								<ListItem key={item.id}>
 									<div>{item.rate}</div>
 									<div>{item.text}</div>
 									<div>{item.created_by.username}</div>
 									<div>{item.created_at}</div>
-								</li>
+								</ListItem>
 							))}
-						</ul>
+						</List>
 					</Grid>
 				</Grid>
 			</Paper>

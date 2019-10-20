@@ -3,8 +3,8 @@ import { fetchProductsAction } from './../../redux/reducers/productsReducer'
 import { List, Grid, withStyles } from '@material-ui/core'
 import { connect } from 'react-redux'
 import Product from '../Product';
-import './index.css';
 import ProductListItem from "../ProductListItem"
+import './index.css';
 
 const styles = {
   root: {
@@ -15,7 +15,7 @@ const styles = {
     width: 400,
   },
   selectedProduct: {
-    minWidth: 500
+    width: 590
   }
 }
 
