@@ -25,11 +25,28 @@ class Product extends Component {
 
 	getProduct = () => this.props.productsState.products.filter((product) => product.id === this.props.productsState.selectedProductId)[0]
 
+	getReviewsList = () => {
+		const { id } = this.getProduct()
+		const { selectedProductId } = this.props.productsState
+		const { reviews } = this.props.reviewsState
+
+		return (
+
+			<List>
+				{id === selectedProductId && reviews
+					.sort((itemA, itemB) => new Date(itemB.created_at) - new Date(itemA.created_at))
+					.map((item) => (
+					<ListItem key={item.id}>
+						<Review review={item}/>
+					</ListItem>
+				))}
+			</List>
+		)
+	}
+
 	render() {
 
 		const { id, title, img, text } = this.getProduct()
-		const { reviews } = this.props.reviewsState
-		const { selectedProductId } = this.props.productsState
 		const { classes } = this.props
 		const { isLoggedIn } = this.props.userState
 
@@ -54,13 +71,8 @@ class Product extends Component {
 
 							{isLoggedIn ? <ReviewForm productId={id}/> : <LoginSuggest />}
 
-							<List>
-								{id === selectedProductId && reviews.map((item) => (
-									<ListItem key={item.id}>
-										<Review review={item}/>
-									</ListItem>
-								))}
-							</List>
+							{this.getReviewsList()}
+
 						</Box>
 					</Grid>
 				</Grid>

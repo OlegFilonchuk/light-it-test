@@ -65,7 +65,7 @@ class ProductList extends Component {
 
     return (
       <>
-      <AppBar position="static" className={classes.header}>
+      <AppBar position="sticky" className={classes.header}>
         <Toolbar>
           <Typography className={classes.title}>
             Our awesome application

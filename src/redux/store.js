@@ -13,13 +13,13 @@ const rootReducer = combineReducers({
 	form: formReducer
 })
 
-const composeEnhancers = typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-	? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-	: compose
-
-const enhancer = composeEnhancers(
-	applyMiddleware(createSagaMiddleware)
-)
+// const composeEnhancers = typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+// 	? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+// 	: compose
+//
+// const enhancer = composeEnhancers(
+// 	applyMiddleware(createSagaMiddleware)
+// )
 
 const sagaMiddleware = createSagaMiddleware();
 

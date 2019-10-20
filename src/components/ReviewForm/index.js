@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { Field, reduxForm } from 'redux-form'
-import { TextField, Button, Grid, Box, Typography, Paper } from '@material-ui/core'
+import { TextField, Button, Typography, Paper } from '@material-ui/core'
 import { Rating } from '@material-ui/lab'
 import { makeStyles } from '@material-ui/core/styles'
-import { postReviewAction } from "../../redux/reducers/reviewsReducer"
+import {fetchReviewsAction, postReviewAction} from "../../redux/reducers/reviewsReducer"
 import {connect} from "react-redux"
 import { reviewFormValidator } from "../../utils/schemas/yupReviewFormValidator";
 import { toast } from "react-toastify"
@@ -32,33 +32,26 @@ const renderTextField = ({label, input, meta: { touched, invalid, error }}) => (
 	/>
 )
 
-// const renderRatingField = () => {
-//	const [value, setValue] = React.useState(2)
-// 	return (
-// 		<Rating name="rating" value={value} />
-// 	)
-// }
-
 const ReviewForm = (props) => {
 
-	const [value, setValue] = React.useState(0)
+	const [value, setValue] = useState(0)
 
 	const submitReviewForm = async (ev) => {
 		ev.preventDefault()
 		try {
 			await reviewFormValidator.validate(props.fields.values)
-	  	props.postReview({productId: props.productId, data: props.fields.values})
+	  	await props.postReview({productId: props.productId, data: props.fields.values})
+			props.fetchReviews(props.productId)
 		} catch (e) {
 			toast.error(e.message)
 			console.log(e)
 		} finally {
+			setValue(0)
 			props.reset()
 		}
 	}
 
 	const classes = useStyles()
-
-	console.log(props.fields)
 
 	return (
 		<Paper className={classes.root}>
@@ -78,13 +71,13 @@ const ReviewForm = (props) => {
 	)
 }
 
-const mapStateToProps = ({reviewsState, form}) => ({
-	reviews: reviewsState,
+const mapStateToProps = ({form}) => ({
 	fields: form.reviewForm
 })
 
 const mapDispatchToProps = {
-	postReview: postReviewAction
+	postReview: postReviewAction,
+	fetchReviews: fetchReviewsAction
 }
 
 export default reduxForm({

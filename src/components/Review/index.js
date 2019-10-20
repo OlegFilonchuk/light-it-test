@@ -1,5 +1,6 @@
 import React from 'react'
 import { Card, Typography, makeStyles, Box } from '@material-ui/core'
+import { Rating } from "@material-ui/lab"
 
 const useStyles = makeStyles({
   root: {
@@ -33,12 +34,10 @@ const Review = ({review: {id, rate, text, created_by, created_at}}) => {
   return (
     <Card className={classes.root}>
 
+      <Rating value={rate} readOnly />
+
       <Typography variant="subtitle1" className={classes.text}>
         "{text}"
-      </Typography>
-
-      <Typography variant="subtitle2" className={classes.rate}>
-        Rated as {rate}
       </Typography>
 
       <Box className={classes.caption}>
