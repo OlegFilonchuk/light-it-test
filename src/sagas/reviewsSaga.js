@@ -25,7 +25,7 @@ export function* postReviewSaga(review) {
   yield put({ type: POST_REVIEW_REQUEST })
   try {
     const {data} = yield postReview(review.payload.productId, review.payload.data)
-    toast.success(`${localStorage.getItem('user')}, your review was posted!`)
+    toast.success(`${localStorage.getItem('username')}, your review was posted!`)
 
     yield put({
       type: POST_REVIEW_RESPONSE,

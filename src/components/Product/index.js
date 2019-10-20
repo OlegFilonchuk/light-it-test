@@ -29,7 +29,7 @@ class Product extends Component {
 		const { reviews } = this.props.reviewsState
 		const { selectedProductId } = this.props.productsState
 		const { classes } = this.props
-		const loggedIn = localStorage.getItem('a_token') && localStorage.getItem('user')
+		const { isLoggedIn } = this.props.userState
 
 		return (
 			<Paper>
@@ -45,7 +45,7 @@ class Product extends Component {
 							{text}
 						</Typography >
 
-						{loggedIn ? <ReviewForm productId={id}/> : <LoginSuggest />}
+						{isLoggedIn ? <ReviewForm productId={id}/> : <LoginSuggest />}
 
 						<List>
 							{id === selectedProductId && reviews.map((item) => (
@@ -64,9 +64,10 @@ class Product extends Component {
 	}
 }
 
-const mapStateToProps = ({reviewsState, productsState}) => ({
+const mapStateToProps = ({reviewsState, productsState, userState}) => ({
 	reviewsState,
-	productsState
+	productsState,
+	userState
 })
 
 const mapDispatchToProps = {

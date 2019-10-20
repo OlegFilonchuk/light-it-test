@@ -11,14 +11,14 @@ export function* userLoginSaga(form) {
 
     if (success) {
       localStorage.setItem('a_token', token)
-      localStorage.setItem('user', form.payload.username)
+      localStorage.setItem('username', form.payload.username)
       history.push('/')
 
       yield put({
         type: USER_RESPONSE,
         payload: {
           token,
-          user: form.payload.username
+          username: form.payload.username
         }
       });
     } else {
@@ -49,7 +49,7 @@ export function* userRegisterSaga(form) {
     const {data: {token, success, message}} = yield registerUser(form.payload)
     if (success) {
       localStorage.setItem('a_token', token)
-      localStorage.setItem('user', form.payload.username)
+      localStorage.setItem('username', form.payload.username)
       history.push('/')
 
       yield put({

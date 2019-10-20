@@ -25,9 +25,8 @@ class ProductListItem extends Component {
   }
 }
 
-const mapStateToProps = ({productsState, reviewsState}) => ({
+const mapStateToProps = ({productsState}) => ({
   productsState,
-  // reviewsState
 })
 
 const mapDispatchToProps = {

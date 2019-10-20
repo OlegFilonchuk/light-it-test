@@ -1,12 +1,12 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
-import { TextField, Button, Grid, Box } from '@material-ui/core'
+import { TextField, Button, Grid, Box, makeStyles } from '@material-ui/core'
 import { connect } from 'react-redux'
 import { loginUserAction, registerUserAction } from '../../redux/reducers/userReducer'
-import { makeStyles } from '@material-ui/core/styles'
 import { asyncValidate } from '../../utils/reduxAsyncValidate'
 import { authFormValidator } from '../../utils/schemas/yupAuthFormValidator'
 import { toast } from 'react-toastify'
+import { Link } from 'react-router-dom'
 
 
 const renderTextField = ({
@@ -67,16 +67,19 @@ const AuthPageForm = (props) => {
         <Field name="password" label="Password" type="password" component={renderTextField}/>
         <Button variant="contained" color="primary" className={classes.button} onClick={submitLoginForm}>Submit login</Button>
         <Button variant="contained" color="secondary" className={classes.button}  onClick={submitRegisterForm}>Submit register</Button>
+        <Link to="/">continue without logging</Link>
       </Grid>
     </Box>
   )
 }
 
-const mapStateToProps = ({userState, form}) => {
-  const {error, token} = userState
-  const fields = form.authForm;
-  return {error, token, fields}
-}
+const mapStateToProps = ({userState: {error, token}, form: {authForm}}) => ({
+  // const {error, token} = userState
+  // const fields = form.authForm
+  error,
+  token,
+  fields: authForm
+})
 
 const mapDispatchToProps = {
   loginUser: loginUserAction,
