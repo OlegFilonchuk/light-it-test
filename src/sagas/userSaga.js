@@ -21,14 +21,16 @@ export function* userLoginSaga(form) {
           user: form.payload.username
         }
       });
+    } else {
+
+      toast.error(message)
+      yield put({
+        type: USER_ERROR,
+        payload: {
+          error: message
+        }
+      })
     }
-    toast.error(message)
-    yield put({
-      type: USER_ERROR,
-      payload: {
-        error: message
-      }
-    })
   }
   catch (e) {
     yield put({
@@ -45,7 +47,6 @@ export function* userRegisterSaga(form) {
   yield put({ type: USER_REQUEST });
   try {
     const {data: {token, success, message}} = yield registerUser(form.payload)
-
     if (success) {
       localStorage.setItem('a_token', token)
       localStorage.setItem('user', form.payload.username)
@@ -58,15 +59,15 @@ export function* userRegisterSaga(form) {
           user: form.payload.username
         }
       });
+    } else {
+      toast.error('registration error')
+      yield put({
+        type: USER_ERROR,
+        payload: {
+          error: message
+        }
+      });
     }
-
-    toast.error(message)
-    yield put({
-      type: USER_ERROR,
-      payload: {
-        error: message
-      }
-    });
   }
   catch (e) {
     yield put({
