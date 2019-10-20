@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { fetchProductsAction } from './../../redux/reducers/productsReducer';
+import { fetchProductsAction } from './../../redux/reducers/productsReducer'
+import { List } from '@material-ui/core'
 import { connect } from 'react-redux'
 import Product from '../Product';
 import './index.css';
+import ProductListItem from "../ProductListItem"
 
 class ProductList extends Component {
 
@@ -11,20 +13,17 @@ class ProductList extends Component {
   }
 
   getProductsList = () => {
+      // <Product product={product} {...this.props} />
     return this.props.products.map((product) => (
-      <li key={product.id}>
-        <Product product={product} {...this.props} />
-      </li>
+      <ProductListItem key={product.id} product={product}/>
     ))
   }
 
   render() {
     return (
-      <div className="App">
-        <ul>
-          {this.getProductsList()}
-        </ul>
-      </div>
+      <List>
+        {this.getProductsList()}
+      </List>
     );
   }
 }

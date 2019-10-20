@@ -8,8 +8,9 @@ import {productSelectAction} from "../../redux/reducers/productsReducer"
 class Product extends Component {
 
 	handleClick = () => {
-		this.props.selectProduct(this.props.product.id)
-		this.props.fetchReviews(this.props.product.id)
+		const { product: { id }, selectProduct, fetchReviews } = this.props
+		selectProduct(id)
+		fetchReviews(id)
 	}
 
 	render() {
@@ -19,7 +20,7 @@ class Product extends Component {
 		const { selectedProductId } = this.props.productsState
 
 		return (
-			<div className='product-desc' onClick={this.handleClick}>
+			<div onClick={this.handleClick}>
 					<div><img src={`http://smktesting.herokuapp.com/static/${img}`} alt={`product ${id}`}/></div>
 					<div>id: {id}</div>
 					<div>title: {title}</div>
