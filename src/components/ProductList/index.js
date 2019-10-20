@@ -13,25 +13,29 @@ class ProductList extends Component {
   }
 
   getProductsList = () => {
+    const { products } = this.props.productsState
       // <Product product={product} {...this.props} />
-    return this.props.products.map((product) => (
+    return products.map((product) => (
       <ProductListItem key={product.id} product={product}/>
     ))
   }
 
   render() {
+    const { selectedProductId} = this.props.productsState
     return (
-      <List>
-        {this.getProductsList()}
-      </List>
+      <>
+        <List>
+          {this.getProductsList()}
+        </List>
+        { selectedProductId && <Product/> }
+      </>
     );
   }
 }
 
-const mapStateToProps = ({ productsState }) => {
-  const {products} = productsState
-  return {products}
-}
+const mapStateToProps = ({ productsState }) => ({
+  productsState
+})
 
 const mapDispatchToProps = {
   fetchProducts: fetchProductsAction,

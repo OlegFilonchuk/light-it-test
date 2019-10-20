@@ -36,3 +36,6 @@ const store = createStore(
 sagaMiddleware.run(rootSaga, store.dispatch);
 
 export default store;
+
+//dev mode
+window.store = store

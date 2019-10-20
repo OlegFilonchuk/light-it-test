@@ -3,24 +3,20 @@ import './index.css'
 import { connect } from 'react-redux';
 import ReviewForm from './../ReviewForm/';
 import {fetchReviewsAction} from "../../redux/reducers/reviewsReducer"
-import {productSelectAction} from "../../redux/reducers/productsReducer"
 
 class Product extends Component {
 
-	handleClick = () => {
-		const { product: { id }, selectProduct, fetchReviews } = this.props
-		selectProduct(id)
-		fetchReviews(id)
-	}
+	getProduct = () => this.props.productsState.products.filter((product) => product.id === this.props.productsState.selectedProductId)[0]
 
 	render() {
 
-		const { id, title, img, text } = this.props.product
+		const { id, title, img, text } = this.getProduct()
 		const { reviews } = this.props.reviewsState
 		const { selectedProductId } = this.props.productsState
 
 		return (
-			<div onClick={this.handleClick}>
+
+			<div>
 					<div><img src={`http://smktesting.herokuapp.com/static/${img}`} alt={`product ${id}`}/></div>
 					<div>id: {id}</div>
 					<div>title: {title}</div>
@@ -48,7 +44,6 @@ const mapStateToProps = ({reviewsState, productsState}) => ({
 
 const mapDispatchToProps = {
 	fetchReviews: fetchReviewsAction,
-	selectProduct: productSelectAction
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Product)
