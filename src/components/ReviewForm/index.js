@@ -41,7 +41,7 @@ const renderTextField = ({label, input, meta: { touched, invalid, error }}) => (
 
 const ReviewForm = (props) => {
 
-	const [value, setValue] = React.useState(2)
+	const [value, setValue] = React.useState(0)
 
 	const submitReviewForm = async (ev) => {
 		ev.preventDefault()
@@ -58,18 +58,19 @@ const ReviewForm = (props) => {
 
 	const classes = useStyles()
 
+	console.log(props.fields)
+
 	return (
 		<Paper className={classes.root}>
 			<form onSubmit={submitReviewForm} className={classes.form}>
 				<Typography>
 					You can leave your own review:
 				</Typography>
-				<Field name="rating" label="rating">
-					<Rating name="rating" value={value} onChange={(ev, nextValue) => {
+				<Field name="rate" label="Rate" component="div">
+					<Rating name="rate" value={value} onChange={(ev, nextValue) => {
 						setValue(nextValue)
 					}}/>
 				</Field>
-				<Field name="rate" label="rate" component={renderTextField}/>
 				<Field name="text" label="Text" component={renderTextField}/>
 				<Button variant="contained" type="submit" color="primary">Send review</Button>
 			</form>
