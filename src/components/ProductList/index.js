@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { fetchProductsAction } from './../../redux/reducers/productsReducer'
 import { logoutUserAction, autologinUserAction } from "../../redux/reducers/userReducer"
-import { List, Grid, withStyles, AppBar, Typography, Button, Toolbar } from '@material-ui/core'
+import { List, Grid, withStyles, AppBar, Typography, Button, Toolbar, CircularProgress } from '@material-ui/core'
 import { connect } from 'react-redux'
-import Product from '../Product';
+import Product from '../Product'
 import ProductListItem from "../ProductListItem"
-import './index.css';
 import { history } from "../../utils/history"
 
 const styles = {
@@ -59,7 +58,7 @@ class ProductList extends Component {
   }
 
   render() {
-    const { selectedProductId } = this.props.productsState
+    const { selectedProductId, isFetching } = this.props.productsState
     const { classes } = this.props
     const { isLoggedIn, username } = this.props.userState
 
@@ -83,7 +82,7 @@ class ProductList extends Component {
 
         <Grid item className={classes.productListGrid}>
           <List>
-            {this.getProductsList()}
+            {isFetching ? <CircularProgress/> : this.getProductsList()}
           </List>
         </Grid>
 
@@ -93,7 +92,7 @@ class ProductList extends Component {
 
       </Grid>
       </>
-    );
+    )
   }
 }
 
@@ -108,4 +107,4 @@ const mapDispatchToProps = {
   autologin: autologinUserAction
 }
 
-export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(ProductList));
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(ProductList))

@@ -5,7 +5,7 @@ import { Rating } from '@material-ui/lab'
 import { makeStyles } from '@material-ui/core/styles'
 import {fetchReviewsAction, postReviewAction} from "../../redux/reducers/reviewsReducer"
 import {connect} from "react-redux"
-import { reviewFormValidator } from "../../utils/schemas/yupReviewFormValidator";
+import { reviewFormValidator } from "../../utils/schemas/yupReviewFormValidator"
 import { toast } from "react-toastify"
 
 const useStyles = makeStyles({
@@ -19,6 +19,12 @@ const useStyles = makeStyles({
 		'& > *': {
 			marginBottom: 20
 		}
+	},
+	input: {
+		
+	},
+	button: {
+		width: 180
 	}
 })
 
@@ -40,7 +46,7 @@ const ReviewForm = (props) => {
 		ev.preventDefault()
 		try {
 			await reviewFormValidator.validate(props.fields.values)
-	  	await props.postReview({productId: props.productId, data: props.fields.values})
+	  		await props.postReview({productId: props.productId, data: props.fields.values})
 			props.fetchReviews(props.productId)
 		} catch (e) {
 			toast.error(e.message)
@@ -64,8 +70,8 @@ const ReviewForm = (props) => {
 						setValue(nextValue)
 					}}/>
 				</Field>
-				<Field name="text" label="Text" component={renderTextField}/>
-				<Button variant="contained" type="submit" color="primary">Send review</Button>
+				<Field name="text" label="Text" component={renderTextField} className={classes.input}/>
+				<Button variant="contained" type="submit" color="primary" className={classes.button}>Send review</Button>
 			</form>
 		</Paper>
 	)

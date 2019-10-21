@@ -1,5 +1,5 @@
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
-import createSagaMiddleware from 'redux-saga';
+import createSagaMiddleware from 'redux-saga'
 import { productsReducer } from './reducers/productsReducer'
 import { userReducer } from './reducers/userReducer'
 import { reducer as formReducer } from 'redux-form'
@@ -21,11 +21,11 @@ const rootReducer = combineReducers({
 // 	applyMiddleware(createSagaMiddleware)
 // )
 
-const sagaMiddleware = createSagaMiddleware();
+const sagaMiddleware = createSagaMiddleware()
 
 const middlewares = [
 	sagaMiddleware,
-];
+]
 
 const store = createStore(
 	rootReducer,
@@ -33,9 +33,6 @@ const store = createStore(
 	compose(applyMiddleware(...middlewares))
 )
 
-sagaMiddleware.run(rootSaga, store.dispatch);
+sagaMiddleware.run(rootSaga, store.dispatch)
 
-export default store;
-
-//dev mode
-window.store = store
+export default store

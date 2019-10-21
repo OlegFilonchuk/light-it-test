@@ -5,7 +5,7 @@ import { loginUser, registerUser} from "../api/restApiController"
 import {toast} from "react-toastify"
 
 export function* userLoginSaga(form) {
-  yield put({ type: USER_REQUEST });
+  yield put({ type: USER_REQUEST })
   try {
     const {data: {token, success, message}} = yield loginUser(form.payload)
 
@@ -20,9 +20,8 @@ export function* userLoginSaga(form) {
           token,
           username: form.payload.username
         }
-      });
+      })
     } else {
-
       toast.error(message)
       yield put({
         type: USER_ERROR,
@@ -44,7 +43,7 @@ export function* userLoginSaga(form) {
 }
 
 export function* userRegisterSaga(form) {
-  yield put({ type: USER_REQUEST });
+  yield put({ type: USER_REQUEST })
   try {
     const {data: {token, success, message}} = yield registerUser(form.payload)
     if (success) {
@@ -58,7 +57,7 @@ export function* userRegisterSaga(form) {
           token,
           username: form.payload.username
         }
-      });
+      })
     } else {
       toast.error('registration error')
       yield put({
@@ -66,7 +65,7 @@ export function* userRegisterSaga(form) {
         payload: {
           error: message
         }
-      });
+      })
     }
   }
   catch (e) {
@@ -75,6 +74,6 @@ export function* userRegisterSaga(form) {
       payload: {
         error: e.response.message
       }
-    });
+    })
   }
 }

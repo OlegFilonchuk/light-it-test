@@ -1,4 +1,4 @@
-import { takeLatest } from 'redux-saga/effects';
+import { takeLatest } from 'redux-saga/effects'
 import { PRODUCTS_FETCH } from '../redux/reducers/productsReducer'
 import { productsListSaga } from './productsSaga'
 import { USER_REGISTER, USER_LOGIN } from "../redux/reducers/userReducer"
@@ -14,4 +14,4 @@ function* rootSaga() {
   yield takeLatest(REVIEW_POST, postReviewSaga)
 }
 
-export default rootSaga;
+export default rootSaga

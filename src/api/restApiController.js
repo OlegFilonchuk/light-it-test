@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { baseUrl } from "./baseUrl"
 
-axios.defaults.baseURL = baseUrl;
+axios.defaults.baseURL = baseUrl
 
 export const getProducts = () => {
   return axios.get(`/products/`)

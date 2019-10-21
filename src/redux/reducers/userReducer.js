@@ -1,5 +1,5 @@
 export const USER_REQUEST = 'USER_REQUEST'
-export const USER_RESPONSE = 'USER_RESPONSE';
+export const USER_RESPONSE = 'USER_RESPONSE'
 export const USER_LOGIN = 'USER_LOGIN'
 export const USER_REGISTER = 'USER_REGISTER'
 export const USER_ERROR = 'USER_ERROR'

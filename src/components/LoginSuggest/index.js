@@ -1,6 +1,7 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from '@material-ui/core'
 import { Typography, makeStyles, Paper } from "@material-ui/core"
+import { history } from './../../utils/history'
 
 const useStyles = makeStyles({
   root: {
@@ -15,19 +16,23 @@ const useStyles = makeStyles({
     color: '#000',
     textDecoration: 'none',
     fontWeight: 'bold',
-    '$:hover': {
-      color: '#fff'
-      //TODO: hovering animation
+    '&:hover': {
+      cursor: 'pointer'
     }
   }
 })
 
 const LoginSuggest = () => {
+
+  const handleLinkClick = () => {
+    history.push('/login')
+  }
+
   const classes = useStyles()
   return (
     <Paper className={classes.root}>
       <Typography className={classes.text}>
-        You have to <Link to={'/login'} className={classes.link}>log in</Link> to leave reviews
+        You have to <Link onClick={handleLinkClick} className={classes.link}>log in</Link> to leave reviews
       </Typography>
     </Paper>
   )

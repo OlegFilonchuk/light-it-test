@@ -3,15 +3,15 @@ export const asyncValidate = (schema) =>  {
     return new Promise((resolve, reject) => {
       schema.validate(values, {abortEarly: false})
         .then(() => {
-          resolve();
+          resolve()
         })
         .catch(errors => {
-          let reduxFormErrors = {};
+          let reduxFormErrors = {}
           errors.inner.forEach(error => {
-            reduxFormErrors[error.path] = error.message;
-          });
-          reject(reduxFormErrors);
+            reduxFormErrors[error.path] = error.message
+          })
+          reject(reduxFormErrors)
         })
-    });
+    })
   }
-};
+}

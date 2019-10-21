@@ -3,7 +3,7 @@ import { PRODUCTS_REQUEST, PRODUCTS_ERROR, PRODUCTS_RESPONSE } from '../redux/re
 import { getProducts} from "../api/restApiController"
 
 export function* productsListSaga() {
-  yield put({ type: PRODUCTS_REQUEST });
+  yield put({ type: PRODUCTS_REQUEST })
   try {
     const {data} = yield getProducts()
     yield put({
@@ -11,7 +11,7 @@ export function* productsListSaga() {
       payload: {
         products: data
       }
-    });
+    })
   }
   catch (e) {
     yield put({
@@ -19,6 +19,6 @@ export function* productsListSaga() {
       payload: {
         error: e
       }
-    });
+    })
   }
 }

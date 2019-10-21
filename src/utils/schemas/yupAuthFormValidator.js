@@ -1,4 +1,4 @@
-const yup = require('yup');
+const yup = require('yup')
 
 export const authFormValidator = yup.object().shape({
   password: yup
@@ -7,4 +7,4 @@ export const authFormValidator = yup.object().shape({
   username: yup
     .string()
     .required('Empty username field!'),
-});
+})

@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
 import './index.css'
-import { connect } from 'react-redux';
-import ReviewForm from './../ReviewForm/';
+import { connect } from 'react-redux'
+import ReviewForm from './../ReviewForm/'
 import {fetchReviewsAction} from "../../redux/reducers/reviewsReducer"
-import { Paper, Grid, Typography, withStyles, List, ListItem, Box } from '@material-ui/core'
+import { Paper, Grid, Typography, withStyles, List, ListItem, Box, CircularProgress } from '@material-ui/core'
 import LoginSuggest from "../LoginSuggest"
 import Review from "../Review"
 
 const styles = {
 	root: {
 		backgroundColor: '#ddd',
-		padding: 20
+		padding: 20,
 	},
 	title: {
 		marginTop: 30,
@@ -19,11 +19,15 @@ const styles = {
 		marginTop: 30,
 		marginBottom: 50
 	}
+	
 }
 
 class Product extends Component {
 
-	getProduct = () => this.props.productsState.products.filter((product) => product.id === this.props.productsState.selectedProductId)[0]
+	getProduct = () => {
+		const { products, selectedProductId } = this.props.productsState
+		return products.find((product) => product.id === selectedProductId)
+	}
 
 	getReviewsList = () => {
 		const { id } = this.getProduct()
@@ -49,6 +53,7 @@ class Product extends Component {
 		const { id, title, img, text } = this.getProduct()
 		const { classes } = this.props
 		const { isLoggedIn } = this.props.userState
+		const { isFetching } = this.props.reviewsState
 
 		return (
 			<Paper>
@@ -71,7 +76,7 @@ class Product extends Component {
 
 							{isLoggedIn ? <ReviewForm productId={id}/> : <LoginSuggest />}
 
-							{this.getReviewsList()}
+							{isFetching ? <CircularProgress/> : this.getReviewsList()}
 
 						</Box>
 					</Grid>

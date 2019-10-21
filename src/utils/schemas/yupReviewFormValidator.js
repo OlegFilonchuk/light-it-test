@@ -1,4 +1,4 @@
-const yup = require('yup');
+const yup = require('yup')
 
 export const reviewFormValidator = yup.object().shape({
   rate: yup
@@ -7,4 +7,4 @@ export const reviewFormValidator = yup.object().shape({
   text: yup
     .string()
     .required('Empty text field!')
-});
+})
